@@ -6,6 +6,36 @@ export function initModal(editBtn) {
     const modalGalleryView = document.getElementById("modal-gallery-view");
     const modalAddView = document.getElementById("modal-add-view");
     const modalBack = modal.querySelector(".modal-back");
+    const inputUpload = document.getElementById("image-upload");
+    const imagePreview = document.getElementById("image-preview");
+
+    inputUpload.addEventListener("change", () => {
+        const file = inputUpload.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    const inputTitle = document.getElementById("photo-title");
+    const selectCategory = document.getElementById("photo-category");
+    const btnSubmit = document.getElementById("btn-submit-photo");
+
+    function checkFormValidation() {
+        if (inputUpload.files.length > 0 && inputTitle.value.trim() !== "" && selectCategory.value !== "") {
+            btnSubmit.disabled = false;
+        } else {
+            btnSubmit.disabled = true;
+        }
+    }
+
+    inputUpload.addEventListener("change", checkFormValidation);
+    inputTitle.addEventListener("input", checkFormValidation);
+    selectCategory.addEventListener("change", checkFormValidation);
 
     editBtn.addEventListener("click", (e) => {
         e.preventDefault();
