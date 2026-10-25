@@ -20,3 +20,11 @@ export async function fetchCategories() {
         return [];
     }
 }
+
+export async function deleteWorkAPI(id, token) {
+    const response = await fetch(`${API_URL}/works/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${token}` }
+    });
+    return response.ok;
+}
