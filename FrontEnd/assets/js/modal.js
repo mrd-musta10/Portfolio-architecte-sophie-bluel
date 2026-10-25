@@ -37,6 +37,21 @@ export function initModal(editBtn) {
     inputTitle.addEventListener("input", checkFormValidation);
     selectCategory.addEventListener("change", checkFormValidation);
 
+    const formAddPhoto = document.getElementById("form-add-photo");
+
+    formAddPhoto.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const token = localStorage.getItem("token");
+        const formData = new FormData();
+        formData.append("image", inputUpload.files[0]);
+        formData.append("title", inputTitle.value.trim());
+        formData.append("category", selectCategory.value);
+
+        if (onAddCallback) {
+        await onAddCallback(formData, token);
+        }
+    });
+
     editBtn.addEventListener("click", (e) => {
         e.preventDefault();
         modal.style.display = "flex";

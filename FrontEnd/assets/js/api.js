@@ -28,3 +28,12 @@ export async function deleteWorkAPI(id, token) {
     });
     return response.ok;
 }
+
+export async function addWorkAPI(formData, token) {
+    const response = await fetch(`${API_URL}/works`, {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${token}` },
+        body: formData
+    });
+    return response.ok ? await response.json() : null;
+}
